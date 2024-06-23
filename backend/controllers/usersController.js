@@ -1,6 +1,7 @@
 import AsyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 
 const registerUser = AsyncHandler(async (req, res) => {
@@ -28,7 +29,23 @@ const registerUser = AsyncHandler(async (req, res) => {
             const createdUser = await  User.create({
                 name,email,dob,password:hashedPass
             })
-            res.send(createdUser)
+            res.json({
+                _id: createdUser._id,
+                name: createdUser.name,
+                email: createdUser.email,
+                dob: createdUser.dob,
+                password: createdUser. password,
+                token: generateToken(createdUser._id),
+                location:newUser?.location,
+                image:newUser?.image,
+                coverImage:newUser?.coverImage,
+                website:newUser?.website,
+                createdAt:newUser?.createdAt
+
+
+
+
+            });
     
         }
         catch (error){
@@ -58,7 +75,20 @@ if(!findUser){
         res.status(401)
         throw new Error('Invalid Password!')
     }else{
-        res.send(findUser)
+        res.json({
+            _id: findUser._id,
+            name: findUser.name,
+            email: findUser.email,
+            dob: findUser.dob,
+            password: findUser. password,
+            token: generateToken(findUser._id),
+            location:findUser?.location,
+            image:findUser?.image,
+            coverImage:findUser?.coverImage,
+            website:findUser?.website,
+            createdAt:findUser?.createdAt
+
+        });
     }
 }
 })
@@ -81,4 +111,23 @@ const findMyProfile = AsyncHandler(async (req,res) => {
 
 
 
-export {registerUser, userLogin,findMyProfile} 
+
+const findAllUsers = AsyncHandler(async(req,res) => {
+    const allUsers = await User.find();
+    res.send(allUsers)
+})
+
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+    });
+}
+
+
+
+export {
+    registerUser, 
+    userLogin,
+    findMyProfile,
+    findAllUsers
+} 

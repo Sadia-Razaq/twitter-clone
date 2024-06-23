@@ -1,0 +1,43 @@
+::-webkit-scrollbar{
+  width: 0px;
+
+}
+::-webkit-scrollbar-thumb{
+  width: 0px;
+}
+
+.liked-heart{
+  color: red;
+}
+.register,
+.SignIn {
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  z-index: 2222;
+}
+
+body {
+  overflow-x: hidden !important;
+  background-color: #e8ecef;
+}
+.hide-default-input-style {
+  box-shadow: 0 0 0 0 !important;
+  outline-width: none !important;
+  border: none !important;
+}
+::placeholder {
+  font-weight: medium !important;
+}
+
+.side-item {
+  transition: all 0.1s ;
+
+}
+.side-item:hover {
+  background-color: #1ca3f1;
+  color: white;
+
+
+}
